@@ -1,33 +1,20 @@
 <template>
-<div class="container">
-    <h2>Bordered Table</h2>
-    <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-            </tr>
-        </tbody>
-    </table>
+<div>
+    <h1>Welcome to Hands on Vue.js with ASP.NET Core!</h1>
+
+    <p>
+        The time is: {{ time }}
+    </p>
+
+    <p>
+        The current users of our system are:
+        <ul>
+            <li v-for="user in users" :key="user.userName">
+                {{ user.fullName }} - {{ user.userName }}
+            </li>
+        </ul>
+    </p>
+
 </div>
 </template>
 
@@ -36,8 +23,18 @@ export default {
     name: "app",
     data() {
         return {
-            time: new Date().toString()
+            time: new Date().toString(),
+            users: []
         };
+    },
+    mounted() {
+        fetch("/api/users")
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                this.users = data;
+            });
     }
 };
 </script>

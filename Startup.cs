@@ -2,9 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ECommerce.Data;
+using ECommerce.Data.Entities;
+using ECommerce.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +29,22 @@ namespace Store
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.ViewLocationExpanders.Add(new FeatureLocationExpander());
+            });
+
+            string conString = Configuration["ConnectionStrings:DefaultConnection"];
+            services.AddDbContext<EcommerceContext>(options => options.UseSqlServer(conString));
+
+            services.AddIdentity<AppUser, AppRole>()
+                    .AddEntityFrameworkStores<EcommerceContext>()
+                    .AddDefaultTokenProviders();
+
+            DbContextExtensions.UserManager =
+                services.BuildServiceProvider().
+                GetService<UserManager<AppUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
