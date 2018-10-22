@@ -17,7 +17,7 @@ export default {
     },
     mounted() {
         const slug = this.$route.params.slug;
-
+        
         fetch(`/api/products/${slug}`)
             .then(response => {
                 return response.json();

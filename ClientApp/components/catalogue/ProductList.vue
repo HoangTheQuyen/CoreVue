@@ -34,3 +34,31 @@ export default {
     }
 };
 </script>
+
+<style>
+* {
+    box-sizing: border-box !important;
+}
+
+.products {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.list .item {
+    width: 25%;
+    float: left;
+    padding: 20px 10px 20px 0;
+}
+
+.list img,
+.list h3,
+.list p {
+    cursor: pointer;
+}
+
+.list img {
+    width: 100px;
+}
+</style>

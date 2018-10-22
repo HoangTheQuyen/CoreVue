@@ -23,3 +23,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.details {
+    padding: 20px;
+}
+</style>
